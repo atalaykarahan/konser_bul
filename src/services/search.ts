@@ -10,7 +10,7 @@ class SearchService {
     artist: string,
     country: string
   ): Promise<SearchResult[]> {
-    const searchQuery = `${artist} concert tickets ${country}`;
+    const searchQuery = `${artist} konser bileti satın al`;
     const searchResults: SearchResult[] = [];
 
     //google search
@@ -21,9 +21,13 @@ class SearchService {
       num: 10,
     });
 
+
+    console.log("websitelerin linkleri bunlar; ", searchResponse.data.items);
     if (searchResponse.data.items) {
       for (const item of searchResponse.data.items) {
         try {
+        
+
           const pageResponse = await axios.get(item.link!, {
             headers: {
               "User-Agent":

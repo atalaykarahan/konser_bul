@@ -13,6 +13,8 @@ export const getConcert: RequestHandler = async (req, res, next) => {
       throw createHttpError(400, "Missing parameters");
     }
 
+    console.log('gelen veriler:', artist, country);
+
     const searchResults = await searchService.searchConcerts(artist, country);
 
     res.status(200).json(searchResults);
