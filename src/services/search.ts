@@ -9,7 +9,7 @@ class SearchService {
 
   private async scrapePage(url: string): Promise<string> {
     const browser = await puppeteer.launch({
-      headless: "new",
+      headless: true,
       args: ['--no-sandbox', '--disable-setuid-sandbox']
     });
 
@@ -38,7 +38,7 @@ class SearchService {
 
         for (const selector of closeSelectors) {
           await page.evaluate((sel) => {
-            const element = document.querySelector(sel);
+            const element = document.querySelector(sel) as HTMLElement;
             if (element) element.click();
           }, selector);
         }
@@ -86,7 +86,7 @@ class SearchService {
       ].map(domain => `-site:${domain}`).join(' ');
 
       // Arama sorgusunu oluştur
-      const searchQuery = `"${artist.toLowerCase()}" bileti satın al ${excludeSites}`;
+      const searchQuery = `${artist.toLowerCase()} bileti satın al ${excludeSites}`;
 
       console.log(`Arama sorgusu: ${searchQuery}`);
 
@@ -95,9 +95,8 @@ class SearchService {
         cx: process.env.SEARCH_ENGINE_ID,
         q: searchQuery, 
         num: 10,
-        lr: 'lang_tr',
         dateRestrict: 'y1',
-        exactTerms: artist
+        exactTerms: artist,
       });
 
       console.log("Bulunan websitelerin linkleri:", 

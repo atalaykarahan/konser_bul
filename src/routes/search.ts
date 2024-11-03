@@ -5,6 +5,6 @@ import * as SearchController from "../controller/search";
 const router = express.Router();
 
 //login
-router.get("/find_concert/:artist/:country", SearchController.getConcert);
+router.post("/find_concert", SearchController.findConcert);
 
 export default router;
